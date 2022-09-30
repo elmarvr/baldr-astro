@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_lid_bestuurslids",
+  "info": {
+    "displayName": "Bestuurslid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "member": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::member.member"
+    },
+    "function": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    }
+  }
+}

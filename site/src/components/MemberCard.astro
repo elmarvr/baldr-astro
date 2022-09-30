@@ -1,0 +1,31 @@
+---
+import { MemberAttributes } from "../types";
+import CMSImage from "./CMSImage.astro";
+
+interface Props {
+  member: MemberAttributes
+}
+
+const { member } = Astro.props;
+
+const fullName = `${member.firstName} ${member.lastName}`;
+---
+
+
+
+<div class="flex flex-col gap-4">
+  <div class="w-full overflow-hidden bg-gray-100">
+    <CMSImage
+      height={64 * 16}
+      aspectRatio="6:5"
+      image={member.image.data.attributes}
+      alt={fullName}
+    />
+  </div>
+
+  <div>
+    <p class="font-medium pb-1">{fullName}</p>
+    <p class="text-sm">{member.study}</p>
+    <p class="text-sm">{member.year}</p>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MemberCard from '../components/MemberCard.astro';
+import Section from "../components/Section.astro";
+import BoardCard from '../components/BoardCard.astro';
+import { preloadStrapiImages, strapi } from '../strapi';
+import { BoardAttributes, HouseAttributes, MemberAttributes } from '../types';
+import Markdown from '../components/Markdown.astro';
+import Carousel from '../components/Carousel';
+import ImageGrid from '../components/ImageGrid';
+import Statistic from '../components/Statistic.astro';
+
+const members = await strapi<MemberAttributes[]>("/members?populate=image")
+const board = await strapi<BoardAttributes>("/board?populate[members][populate][member][populate]=image")
+const house = await strapi<HouseAttributes>("/house?populate=images")
+
+const houseImages = await preloadStrapiImages(house.data.attributes.images, {
+  width: 500,
+  aspectRatio: "16:9"
+})
+const memberImages = members.data.map(({ attributes }) => attributes.image.data.attributes)
+---
+
+<Layout title="Welcome to Astro.">
+
+  <Section className="bg-gray-100" title="Het Huis">
+    <div class="grid sm:grid-cols-2 gap-8">
+      <Markdown md={house.data.attributes.description} />
+
+      <Carousel images={houseImages} client:visible className="row-start-1 sm:col-start-2" />
+    </div>
+  </Section>
+  
+
+  <Section title="Het Bestuur" align="center">
+
+    <div class="rounded shadow bg-slate-700 p-12">
+      <div class="grid sm:grid-cols-3 gap-8">
+        {board.data.attributes.members.map(({ function: func, member }) => (
+          <BoardCard
+            func={func}
+            member={member.data.attributes}
+          />
+        ))}
+      </div>
+    </div>
+
+
+  </Section>
+
+  <Section>
+    <div class="flex justify-center w-full">
+      <div class="flex flex-col gap-8 justify-around sm:flex-row sm:w-full">
+        <Statistic value={12}>
+          Afgestudeerden
+        </Statistic>
+
+        <Statistic value={15}>
+          Leden
+        </Statistic>
+        
+        <Statistic value={3}>
+          KKM'ers
+        </Statistic>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <ImageGrid client:visible images={[...houseImages, ...memberImages]}/>
+  </Section>
+
+
+  
+  <Section title="De leden">
+    <div class="grid grid-cols-4 gap-8">
+      {members.data.map((member) => (
+        <MemberCard
+          member={member.attributes}
+        />
+      ))}
+    </div>  
+  </Section>
+  
+
+
+</Layout>
+

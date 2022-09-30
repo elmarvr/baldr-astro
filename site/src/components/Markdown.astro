@@ -1,0 +1,12 @@
+---
+import { marked } from 'marked';
+
+interface Props {
+  md: string;
+}
+
+const content = marked.parse(Astro.props.md);
+
+---
+
+<article set:html={content} class="prose prose-sm prose-h3:mt-0 font-serif text-gray-900" />

@@ -1,0 +1,29 @@
+---
+
+interface Props {
+  title?: string;
+  align?: "left" | "center" | "right";
+  className?: string;
+}
+
+const { title, align = "left", className  } = Astro.props;
+
+const alignClass = {
+  left: "sm:justify-start",
+  center: "sm:justify-center",
+  right: "sm:justify-end",
+}[align];
+---
+
+<section class={`${className ?? ""} py-12`}>
+  <div class={`container mx-auto px-2`}>
+    {title && 
+      <div class={`justify-center ${alignClass} flex pb-14`}>
+        <h2 class={`text-4xl font-display tracking-wider uppercase font-bold after:w-full after:content after:h-1 after:bg-red-900 after:block after:mt-2`}>
+          {title}
+        </h2>
+      </div>
+    }
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+import {  Image, ImgHTMLAttributes } from "@astrojs/image/components"
+import { ImageAttributes } from "../types";
+
+interface Props extends ImgHTMLAttributes {
+  image: ImageAttributes
+  aspectRatio?: string;
+}
+
+const {image, ...rest} = Astro.props;
+const src = `http://localhost:1337${image.url}`;
+
+---
+
+<Image src={src} alt={image.alternativeText} {...rest}/>

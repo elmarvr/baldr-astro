@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "boards",
+  "info": {
+    "singularName": "board",
+    "pluralName": "boards",
+    "displayName": "Bestuur",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "members": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lid.bestuurslid",
+      "required": true,
+      "max": 3,
+      "min": 3
+    }
+  }
+}

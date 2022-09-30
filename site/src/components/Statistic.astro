@@ -1,0 +1,19 @@
+---
+interface Props {
+  value: number;
+}
+
+const { value } = Astro.props;
+---
+
+<div class="flex flex-col gap-4">
+  <p class="text-5xl">{value}</p>
+
+  <div class="h-0.5 w-16 bg-red-900"></div>
+
+  <div class="text-lg"><slot /></div>
+</div>
+
+
+
+<!-- <div class="[&>svg]:w-16 [&>svg]:h-16"><slot name="icon" /></div> -->
